@@ -12,11 +12,11 @@ class Medium(object):
         self.__title = title
         self.__price = price
 
-    def pr(self, min_width=5):
+    def __str__(self, min_width=5):
         width = max(min_width, 5)
         to_fill = mask.format(width)
-        print(to_fill.format('Title', self.__title))
-        print(to_fill.format('Price', self.__price))
+        return '\n'.join([to_fill.format('Title', self.__title),
+                          to_fill.format('Price', self.__price)])
 
 
 class Boek(Medium):
@@ -28,12 +28,12 @@ class Boek(Medium):
         self.__author = author
         self.__pages = pages
 
-    def pr(self, min_width=6):
+    def __str__(self, min_width=6):
         width = max(min_width, 6)
-        super().pr(width)
         to_fill = mask.format(width)
-        print(to_fill.format('Author', self.__author))
-        print(to_fill.format('Pages', self.__pages))
+        return '\n'.join([super().__str__(width),
+                          to_fill.format('Author', self.__author),
+                          to_fill.format('Pages', self.__pages)])
 
 
 class Strip(Boek):
@@ -41,11 +41,11 @@ class Strip(Boek):
         super().__init__(**kwargs)
         self.__illustrator = illustrator
 
-    def pr(self, min_width=11):
+    def __str__(self, min_width=11):
         width = max(min_width, 11)
-        super().pr(width)
         to_fill = mask.format(width)
-        print(to_fill.format('Illustrator', self.__illustrator))
+        return '\n'.join([super().__str__(width),
+                          to_fill.format('Illustrator', self.__illustrator)])
 
         #        titel             prijs   auteur                    aantal blz
 lp = Boek(title="Learning Python", price=35.50,
@@ -60,5 +60,5 @@ strx = Strip(title="Asterix en Cleopatra", price=3.95,
 
 # lp.pr()
 
-strx.pr()
+print(strx)
 # film.pr()
